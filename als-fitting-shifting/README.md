@@ -1,2 +1,2 @@
 To quantitatively capture the underlying patterns, the axle load spectra (ALS) of single axles and tandem axles are fitted using known distribution types.
-Furthermore, to assess the impact of increased axle loads on the ALS of trucks fleet, we employ a Monte Carlo simulation approach to achieve the shifting of ALS.
+Furthermore, to assess the impact of increased axle loads on the ALS of trucks fleet, we employ a Monte Carlo simulation approach to achieve the shifting of ALS. Two examples of EV traffic scenarios are given in this aspect, and the analysis of other scenarios can be performed in the same way.
