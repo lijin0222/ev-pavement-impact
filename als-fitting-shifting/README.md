@@ -82,5 +82,3 @@ Edit (in `als_shifting_example_*.py`):
 
 Then run the script to export a scenario-specific shifted parameter Excel.
 
-```
-```
