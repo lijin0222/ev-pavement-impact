@@ -53,7 +53,7 @@ If running as standalone scripts, add the imports at the top:
 from als_shifting_single import single_als_shift
 from als_shifting_tandem import tandem_als_shift
 ```
-````markdown
+
 ## Example: EV50 (50% penetration)
 
 ```bash
