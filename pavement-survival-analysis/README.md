@@ -59,10 +59,3 @@ To run RSF for other performance metrics (e.g., fatigue/rutting for asphalt, or 
    * input filename
    * any predictor column exclusions
 3. Re-train and export the new model.
-
-## Runtime tips
-
-The demo uses Optuna hyperparameter tuning (`n_trials`). For a quick test, reduce the trial count.
-
-```
-```
