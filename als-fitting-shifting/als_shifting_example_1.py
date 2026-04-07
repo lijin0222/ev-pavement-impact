@@ -1,7 +1,7 @@
 import pandas as pd
 
 # File paths
-input_file = "Fitting_Parameters.xlsx"
+input_file = "fitting_parameters.xlsx"
 output_file = "fitting_parameters_shifted_scenario_EV50_P1_HiBW_LoWA.xlsx"
 
 # Load the input Excel file
