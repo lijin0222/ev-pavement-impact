@@ -1,14 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 
-def single_als_shift(mean, std_dev, num_samples=1000000, x_shift=2000, pen_rate=0.5):
+def single_als_shift(mean, std_dev, num_samples=1000000, weight1=0.5, weight2=0.5, x1_shift=2000, x2_shift=2000, pen_rate=0.5):
     """
     Perform a Monte Carlo simulation with specified parameters, 
     shifting a portion of samples and fitting a normal distribution.
@@ -29,11 +23,23 @@ def single_als_shift(mean, std_dev, num_samples=1000000, x_shift=2000, pen_rate=
     # Create a copy of samples to modify
     modified_samples = samples.copy()
 
-    # Randomly select a subset of samples based on the penetration rate if x_shift is non-zero
-    if x_shift != 0:
-        indices = np.random.choice(num_samples, int(num_samples * pen_rate), replace=False)
-        modified_samples[indices] += x_shift
+    # Determine number of points to shift
+    k = int(num_samples * pen_rate)
 
+    # Randomly select a subset of samples based on the penetration rate if x1_shift and x2_shift is non-zero
+    if x1_shift != 0 or x2_shift != 0:
+        indices = np.random.choice(num_samples, k, replace=False)
+    
+        half_k = int(k * weight1)
+        indices1 = indices[:half_k]
+        indices2 = indices[half_k:]
+        
+        if x1_shift != 0:
+            modified_samples[indices1] += x1_shift
+    
+        if x2_shift != 0:
+            modified_samples[indices2] += x2_shift
+        
     # Fit a normal distribution to the modified samples
     fitted_mean, fitted_std_dev = norm.fit(modified_samples)
     
@@ -90,3 +96,5 @@ def single_als_shift(mean, std_dev, num_samples=1000000, x_shift=2000, pen_rate=
 
     return fitted_mean, fitted_std_dev
 
+# Example
+single_als_shift(mean=9052.97738969874, std_dev=3480.56171928128, num_samples=1000000, x1_shift=2204.6, x2_shift=1000, pen_rate=0.5)
