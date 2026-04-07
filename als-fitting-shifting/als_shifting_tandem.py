@@ -19,8 +19,8 @@ def tandem_als_shift(mean1, std_dev1, weight1,
         std_dev2 (float): Standard deviation of the second normal distribution.
         weight2 (float): Mixing weight of the second normal distribution.
         num_samples (int): Number of samples for Monte Carlo simulation (default: 1,000,000).
-        x_shift1 (float): Value to add to a portion of samples from distribution 1 (default: 2000 lbs.).
-        x_shift2 (float): Value to add to a portion of samples from distribution 2 (default: 2000 lbs.).
+        x1_shift1 & x1_shift2 (float): Value to add to a portion of samples from distribution 1 (default: 2000 lbs.).
+        x2_shift1 & x2_shift2 (float): Value to add to a portion of samples from distribution 2 (default: 2000 lbs.).
         pen_rate (float): Penetration rate, proportion of samples in each distribution to shift (default: 50%).
 
     Returns:
