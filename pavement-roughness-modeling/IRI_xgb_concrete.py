@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-
-
 # Import required libraries
 import numpy as np
 import pandas as pd
@@ -58,7 +53,6 @@ print(y)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 
-# In[20]:
 
 
 # Create StandardScaler object
@@ -78,7 +72,6 @@ print(pd.DataFrame(X_train, columns=X.columns))
 print(pd.DataFrame(X_test, columns=X.columns))
 
 
-# In[21]:
 
 
 # Define monotonicity constraints
@@ -102,7 +95,6 @@ param_space = {
 }
 
 
-# In[22]:
 
 
 # Use Bayesian optimization for hyperparameter search
@@ -116,7 +108,6 @@ bayes_search = BayesSearchCV(
 )
 
 
-# In[23]:
 
 
 # Run the Bayesian optimization search
@@ -126,7 +117,6 @@ bayes_search.fit(X_train, y_train)
 print("Best Parameters:", bayes_search.best_params_)
 
 
-# In[24]:
 
 
 # Predict using the model with the best hyperparameters
@@ -161,7 +151,6 @@ test_r2 = r2_score(y_test, y_pred)
 print("Testing R^2 Score:", test_r2)
 
 
-# In[25]:
 
 
 # Plot model fit
@@ -216,7 +205,6 @@ test_results_df = pd.DataFrame({'True Values': y_test, 'Predicted Values': y_pre
 test_results_df.to_excel('model_test_results_xgb_concrete_bytype.xlsx', index=False)
 
 
-# In[26]:
 
 
 # Plot model fit for training set
@@ -271,7 +259,6 @@ train_results_df = pd.DataFrame({'True Values': y_train, 'Predicted Values': bes
 train_results_df.to_excel('model_train_results_xgb_concrete_bytype.xlsx', index=False)
 
 
-# In[27]:
 
 
 # Create SHAP explainer (best_xgb_reg is the best XGBoost model)
@@ -304,7 +291,6 @@ feature_importance = shap_summary.abs().mean().sort_values(ascending=False)
 print("Feature Importance:\n", feature_importance)
 
 
-# In[28]:
 
 
 # Set matplotlib parameters
