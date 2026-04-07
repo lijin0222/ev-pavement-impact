@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -39,7 +35,6 @@ X_encoded = encoder.fit_transform(X)
 X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=42)
 
 
-# In[5]:
 
 # Create a StandardScaler object
 scaler = StandardScaler()
@@ -58,7 +53,6 @@ print(pd.DataFrame(X_train, columns=X.columns))
 print(pd.DataFrame(X_test, columns=X.columns))
 
 
-# In[6]:
 
 def cross_val_score_rsf(params, X, y, n_splits=5):
     """
@@ -104,7 +98,6 @@ def cross_val_score_rsf(params, X, y, n_splits=5):
     return mean_c_index
 
 
-# In[7]:
 
 # Define the objective function for Optuna
 def objective(trial):
@@ -131,7 +124,6 @@ print("Best C-index:", study.best_value)
 print("Best parameters:", study.best_params)
 
 
-# In[8]:
 
 # Retrieve best parameters
 best_params = study.best_params
@@ -152,7 +144,6 @@ rsf.fit(X_train, y_train)
 joblib.dump(rsf, "model_RSF_IRI_asphalt.joblib")
 
 
-# In[9]:
 # Concordance index (C-index)
 # The C-index is a common evaluation metric in survival analysis that measures
 # the model's ability to rank survival times. Its range is typically 0.5 to 1.0:
@@ -172,7 +163,6 @@ print(f"C-index on training data: {c_index_train:.4f}")
 print(f"C-index on test data: {c_index_test:.4f}")
 
 
-# In[10]:
 # Survival curve fitting quality
 # You can visualize actual and predicted survival curves to check how close they are.
 # Get actual and predicted survival curves for some samples in the test set
@@ -187,7 +177,6 @@ plt.legend()
 plt.show()
 
 
-# In[11]:
 import numpy as np
 import matplotlib.pyplot as plt
 from lifelines import KaplanMeierFitter
@@ -237,7 +226,6 @@ plt.savefig('survival_IRI_asphalt1.png', dpi=600, bbox_inches='tight')
 plt.show()
 
 
-# In[12]:
 # Use Arial font
 matplotlib.rcParams['font.family'] = 'Arial'
 matplotlib.rcParams['axes.facecolor'] = '#f7f7f7'  # default gray background in R
@@ -268,7 +256,6 @@ plt.savefig('survival_IRI_asphalt2.png', dpi=600, bbox_inches='tight')
 plt.show()
 
 
-# In[13]:
 import pandas as pd
 from sklearn.inspection import permutation_importance
 import matplotlib.pyplot as plt
