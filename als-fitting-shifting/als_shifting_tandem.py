@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.mixture import GaussianMixture
@@ -11,7 +5,8 @@ from sklearn.mixture import GaussianMixture
 def tandem_als_shift(mean1, std_dev1, weight1,
                      mean2, std_dev2, weight2,
                      num_samples=1000000,
-                     x_shift1=2000, x_shift2=2000,
+                     x1_shift1=2000, x1_shift2=2000,
+                     x2_shift1=2000, x2_shift2=2000,
                      pen_rate=0.5):
     """
     Perform a Monte Carlo simulation for a tandem axle scenario, applying a Gaussian Mixture Model (GMM).
@@ -47,16 +42,34 @@ def tandem_als_shift(mean1, std_dev1, weight1,
     k1 = int(n1 * pen_rate)
     k2 = int(n2 * pen_rate)
     
-    # Shift distribution 1 if x_shift1 is non-zero
-    if x_shift1 != 0:
+    # Shift distribution 1 if x1_shift1 and x1_shift2 is non-zero
+    if x1_shift1 != 0 or x1_shift2 != 0:
         indices1 = np.random.choice(n1, k1, replace=False)
-        modified_samples1[indices1] += x_shift1
-
-    # Shift distribution 2 if x_shift2 is non-zero
-    if x_shift2 != 0:
-        indices2 = np.random.choice(n2, k2, replace=False)
-        modified_samples2[indices2] += x_shift2
-
+    
+        half_k1 = int(k1 * 0.5)
+        indices1_1 = indices1[:half_k1]
+        indices1_2 = indices1[half_k1:]
+    
+        if x1_shift1 != 0:
+            modified_samples1[indices1_1] += x1_shift1
+    
+        if x1_shift2 != 0:
+            modified_samples1[indices1_2] += x1_shift2
+        
+    # Shift distribution 2 if x2_shift1 and x2_shift2 is non-zero
+    if x2_shift1 != 0 or x2_shift2 != 0:
+            indices2 = np.random.choice(n2, k2, replace=False)
+        
+            half_k2 = int(k2 * 0.5)
+            indices2_1 = indices2[:half_k2]
+            indices2_2 = indices2[half_k2:]
+        
+            if x2_shift1 != 0:
+                modified_samples2[indices2_1] += x2_shift1
+        
+            if x2_shift2 != 0:
+                modified_samples2[indices2_2] += x2_shift2
+        
     # Combine original/modified samples1 with original/modified samples2
     original_samples = np.concatenate([samples1, samples2])
     modified_samples = np.concatenate([modified_samples1, modified_samples2])
@@ -101,45 +114,45 @@ def tandem_als_shift(mean1, std_dev1, weight1,
     print("Modified Std Dev2:", fitted_std_dev2)
     print("Modified Weight2:", fitted_weight2)
 
-    # # Visualization
-    # interval = 2000
-    # x_bins = np.arange(0, 80001, interval)  # Define bins for histograms
+    # Visualization
+    interval = 2000
+    x_bins = np.arange(0, 80001, interval)  # Define bins for histograms
 
-    # # Plot the histograms
-    # counts_orig, _ = np.histogram(original_samples, bins=x_bins)
-    # counts_mod, _ = np.histogram(modified_samples, bins=x_bins)
+    # Plot the histograms
+    counts_orig, _ = np.histogram(original_samples, bins=x_bins)
+    counts_mod, _ = np.histogram(modified_samples, bins=x_bins)
 
-    # x_mid = (x_bins[:-1] + x_bins[1:]) / 2
-    # freq_orig = counts_orig / num_samples
-    # freq_mod = counts_mod / num_samples
+    x_mid = (x_bins[:-1] + x_bins[1:]) / 2
+    freq_orig = counts_orig / num_samples
+    freq_mod = counts_mod / num_samples
 
-    # plt.figure(figsize=(10, 6))
-    # plt.bar(x_mid, freq_orig, width=interval, alpha=0.6, label='Original Distribution')
-    # plt.bar(x_mid, freq_mod, width=interval, alpha=0.6, label='Modified Distribution')
+    plt.figure(figsize=(10, 6))
+    plt.bar(x_mid, freq_orig, width=interval, alpha=0.6, label='Original Distribution')
+    plt.bar(x_mid, freq_mod, width=interval, alpha=0.6, label='Modified Distribution')
 
-    # x_vals = np.linspace(min(original_samples.min(), modified_samples.min()),
-    #                      max(original_samples.max(), modified_samples.max()), 1000)
-    # orig_fit = np.exp(gmm_original.score_samples(x_vals.reshape(-1, 1))) * interval
-    # mod_fit = np.exp(gmm_modified.score_samples(x_vals.reshape(-1, 1))) * interval
+    x_vals = np.linspace(min(original_samples.min(), modified_samples.min()),
+                         max(original_samples.max(), modified_samples.max()), 1000)
+    orig_fit = np.exp(gmm_original.score_samples(x_vals.reshape(-1, 1))) * interval
+    mod_fit = np.exp(gmm_modified.score_samples(x_vals.reshape(-1, 1))) * interval
 
-    # plt.plot(x_vals, orig_fit, linestyle='-', linewidth=2, label='Original GMM Fit')
-    # plt.plot(x_vals, mod_fit, linestyle='-', linewidth=2, label='Modified GMM Fit')
+    plt.plot(x_vals, orig_fit, linestyle='-', linewidth=2, label='Original GMM Fit')
+    plt.plot(x_vals, mod_fit, linestyle='-', linewidth=2, label='Modified GMM Fit')
 
-    # plt.xlabel('X Value')
-    # plt.ylabel('Probability Density')
-    # plt.legend()
-    # plt.title('Original vs Modified GMM Distribution')
-    # plt.show()
+    plt.xlabel('X Value')
+    plt.ylabel('Probability Density')
+    plt.legend()
+    plt.title('Original vs Modified GMM Distribution')
+    plt.show()
 
     return (fitted_mean1, fitted_std_dev1, fitted_weight1,
             fitted_mean2, fitted_std_dev2, fitted_weight2)
 
-# # Example
-# tandem_als_shift(
-#     mean1=14459.5952777771, std_dev1=3852.29541508114, weight1=0.506238670748942,
-#     mean2=32416.3962393595, std_dev2=5723.784053086, weight2=0.493761329251058,
-#     num_samples=1000000,
-#     x_shift1=-2000, x_shift2=0,
-#     pen_rate=0.5
-# )
-
+# Example
+tandem_als_shift(
+    mean1=14459.5952777771, std_dev1=3852.29541508114, weight1=0.506238670748942,
+    mean2=32416.3962393595, std_dev2=5723.784053086, weight2=0.493761329251058,
+    num_samples=1000000,
+    x1_shift1=4409.2, x1_shift2=0,
+    x2_shift1=1000, x2_shift2=-3409.2,
+    pen_rate=1
+)
