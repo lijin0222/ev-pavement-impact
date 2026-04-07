@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -175,4 +169,3 @@ output_params_file = "Fitting_Parameters_GPS-1.xlsx"
 results_df = pd.DataFrame(results)
 results_df.to_excel(output_params_file, index=False)
 print(f"Fitting parameters saved to {output_params_file}")
-
