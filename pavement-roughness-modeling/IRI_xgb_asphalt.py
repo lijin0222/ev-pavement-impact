@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-
 # Import required libraries
 import numpy as np
 import pandas as pd
@@ -138,7 +134,6 @@ test_r2 = r2_score(y_test, y_pred)
 print("Testing R^2 Score:", test_r2)
 
 
-# In[32]:
 
 
 # Plot model fit
@@ -193,8 +188,6 @@ test_results_df = pd.DataFrame({'True Values': y_test, 'Predicted Values': y_pre
 test_results_df.to_excel('model_test_results_xgb_asphalt.xlsx', index=False)
 
 
-# In[33]:
-
 
 # Plot model fit for training set
 plt.figure(figsize=(5, 5))
@@ -248,7 +241,6 @@ train_results_df = pd.DataFrame({'True Values': y_train, 'Predicted Values': bes
 train_results_df.to_excel('model_train_results_xgb_asphalt.xlsx', index=False)
 
 
-# In[34]:
 
 
 # Create SHAP explainer (best_xgb_reg is the best XGBoost model)
@@ -281,7 +273,6 @@ feature_importance = shap_summary.abs().mean().sort_values(ascending=False)
 print("Feature Importance:\n", feature_importance)
 
 
-# In[35]:
 
 
 # Set matplotlib parameters
