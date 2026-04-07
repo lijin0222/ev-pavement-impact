@@ -13,7 +13,7 @@ Core scripts:
 
 Demo data:
 - `axle load spectra_GPS-1.xlsx` — demo ALS inputs for fitting
-- `Fitting_Parameters.xlsx` — demo fitted-parameter table used as shifting input
+- `fitting_parameters.xlsx` — demo fitted-parameter table used as shifting input
 
 ## Dependencies
 ```bash
