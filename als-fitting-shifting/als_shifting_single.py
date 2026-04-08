@@ -11,7 +11,7 @@ def single_als_shift(mean, std_dev, num_samples=1000000, weight1=0.5, weight2=0.
         mean (float): Mean of the original normal distribution.
         std_dev (float): Standard deviation of the original normal distribution.
         num_samples (int): Number of samples for Monte Carlo simulation (default: 1,000,000).
-        x_shift (float): Value to add to a portion of samples (default: 2000 lbs.).
+        x1_shift & x2_shift (float): Value to add to a portion of samples (default: 2000 lbs.).
         pen_rate (float): Penetration rate, proportion of samples to shift (default: 50%).
 
     Returns:
