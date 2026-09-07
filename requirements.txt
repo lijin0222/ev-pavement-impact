@@ -1,0 +1,15 @@
+# Core analysis environment used in the study
+# Python 3.10.19 (conda-forge)
+
+numpy==1.26.4
+pandas==2.3.3
+scipy==1.15.2
+scikit-learn==1.7.2
+scikit-survival==0.25.0
+lifelines==0.30.0
+optuna==4.6.0
+xgboost==3.1.2
+scikit-optimize==0.10.2
+shap==0.48.0
+matplotlib==3.10.8
+seaborn==0.13.2
